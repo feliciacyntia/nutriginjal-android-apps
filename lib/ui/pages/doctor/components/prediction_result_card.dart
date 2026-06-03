@@ -4,11 +4,13 @@ import 'package:nutriginjal/data/models/ckd_input_model.dart';
 class PredictionResultCard extends StatelessWidget {
   final PredictionResult result;
   final VoidCallback onReset;
+  final VoidCallback onSave;
 
   const PredictionResultCard({
     super.key,
     required this.result,
     required this.onReset,
+    required this.onSave,
   });
 
   @override
@@ -20,7 +22,7 @@ class PredictionResultCard extends StatelessWidget {
       color: bgColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: mainColor.withOpacity(0.5)),
+        side: BorderSide(color: mainColor.withValues(alpha: 0.5)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -57,13 +59,23 @@ class PredictionResultCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
+                OutlinedButton(
                   onPressed: onReset,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: Colors.grey.shade300),
+                    foregroundColor: Colors.black54,
                   ),
-                  child: const Text("Reset Form"),
+                  child: const Text("Reset"),
+                ),
+                const SizedBox(width: 12),
+                ElevatedButton.icon(
+                  onPressed: onSave,
+                  icon: const Icon(Icons.check_circle_outline),
+                  label: const Text("Simpan & Selesai"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: mainColor,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
               ],
             ),

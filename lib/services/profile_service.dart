@@ -5,16 +5,30 @@ class ProfileService {
   SupabaseClient get _supabase => Supabase.instance.client;
 
   Future<Profile?> getMyProfile() async {
-    final userId = _supabase.auth.currentUser?.id;
-    if (userId == null) return null;
+    final user = _supabase.auth.currentUser;
+    if (user == null) return null;
 
     try {
       final data = await _supabase
           .from('profiles')
           .select()
-          .eq('id', userId)
+          .eq('id', user.id)
           .single();
-      return Profile.fromJson(data);
+      
+      final profile = Profile.fromJson(data);
+      
+      // Jika email di profile kosong, gunakan email dari auth metadata
+      if (profile.email.isEmpty && user.email != null) {
+        return Profile(
+          id: profile.id,
+          fullName: profile.fullName,
+          email: user.email!,
+          role: profile.role,
+          avatarUrl: profile.avatarUrl,
+        );
+      }
+      
+      return profile;
     } catch (e) {
       print('Error fetching profile: $e');
       return null;

@@ -38,6 +38,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
           'label': result.label,
           'isCkd': result.isCkd,
           'risk_level': result.riskLevel,
+          'stage': result.label.split(' ').last, // Assuming label format like "Stage 1"
         },
       );
 
@@ -336,6 +337,16 @@ class _PredictionScreenState extends State<PredictionScreen> {
                       _result = null;
                       _form = CkdInputForm();
                     });
+                  },
+                  onSave: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Data Lab Berhasil Disimpan!"),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    // Kembali ke Dashboard (Pop 2 kali: dari Prediksi dan dari Pilih Pasien)
+                    Navigator.of(context).popUntil((route) => route.isFirst);
                   },
                 ),
               if (_error != null)

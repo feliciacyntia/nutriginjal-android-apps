@@ -1,67 +1,56 @@
 # NutriGinjal 🥗
 
-Aplikasi mobile Flutter untuk manajemen nutrisi dan kesehatan ginjal. Menyediakan panduan nutrisi personal, konsultasi AI, dan monitoring data laboratorium untuk pasien CKD (Chronic Kidney Disease).
+Aplikasi mobile Flutter untuk manajemen nutrisi dan kesehatan ginjal. Menyediakan panduan nutrisi personal, konsultasi AI, dan monitoring data laboratorium untuk pasien CKD (Chronic Kidney Disease). NutriGinjal menghubungkan Pasien dan Dokter dalam satu ekosistem untuk pemantauan kesehatan ginjal yang lebih akurat.
 
 ## 📱 Fitur Utama
 
-- **🔐 Autentikasi Aman** - Google Sign-In terintegrasi
-- **🤖 AI Konsultasi** - Chatbot powered by Google Gemini untuk saran nutrisi personal
-- **📊 CKD Form** - Form tracking kondisi kesehatan ginjal
-- **🔬 Lab Monitoring** - Tracking hasil laboratorium dan history
-- **🍽️ Nutrisi Kustom** - Rekomendasi menu berdasarkan kondisi kesehatan
-- **👤 Profil Pasien** - Manajemen data pribadi dan medis
-- **💬 Chat Support** - Fitur komunikasi dengan tim medis
+- **🔐 Autentikasi Multirole** - Google Sign-In terintegrasi untuk Pasien dan Dokter.
+- **👨‍⚕️ Dashboard Dokter** - Statistik real-time, manajemen riwayat lab pasien, dan pemilihan pasien terintegrasi.
+- **🤖 NutriSnap AI** - Chatbot cerdas bertenaga Google Gemini yang memberikan saran nutrisi dengan nada bicara yang empati dan ramah.
+- **🔬 Analisis Prediksi CKD** - Integrasi dengan Model Machine Learning (Gradio API) untuk mendeteksi risiko penyakit ginjal berdasarkan parameter laboratorium.
+- **📊 Manajemen Riwayat Lab** - Penyimpanan data laboratorium yang aman di Supabase dengan fitur detail dan penghapusan riwayat (CRUD lengkap).
+- **👤 Profil & Sinkronisasi** - Sinkronisasi data profil otomatis menggunakan Trigger Supabase dan PostgreSQL.
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Flutter** ^3.11.4 - Framework mobile UI
-- **Dart** - Bahasa pemrograman
+- **Flutter 3.x** - Framework UI lintas platform.
+- **Dart** - Bahasa pemrograman utama.
 
-### Backend & Services
-- **Supabase** ^2.8.1 - Database & Authentication
-- **Firebase** - Cloud services (google-services.json)
-- **Google Sign-In** ^6.2.1 - OAuth authentication
-- **Google Generative AI** ^0.4.5 - Gemini AI API
+### Backend & AI
+- **Supabase** - Database PostgreSQL, Autentikasi, dan Real-time Stream.
+- **Google Gemini Pro** - Engine AI untuk asisten gizi (menggunakan riwayat percakapan penuh).
+- **Gradio API** - Hosting model Machine Learning untuk prediksi risiko CKD.
+- **Google Sign-In** - OAuth 2.0 provider.
 
-### Libraries
-- `flutter_markdown` ^0.7.3 - Markdown rendering
-- `csv` ^6.0.0 - CSV parsing
-- `intl` ^0.19.0 - Internationalization
-- `cupertino_icons` ^1.0.8 - iOS icons
-
-## 📁 Struktur Proyek
+## 📁 Struktur Proyek (Terbaru)
 
 ```
 lib/
-├── main.dart              # Entry point aplikasi
-├── core/                  # Core utilities & constants
-│   ├── constants/        # App constants
-│   └── utils/            # Helper functions
-├── data/                  # Data layer
-│   └── models/           # Data models
-├── models/                # Domain models
-│   └── ckd_form_model.dart
-├── services/              # Business logic & API calls
-│   ├── api_service.dart
-│   ├── auth_service.dart
-│   ├── chat_service.dart
-│   ├── gemini_service.dart
-│   ├── lab_service.dart
-│   ├── nutrisi_service.dart
+├── core/                  # Utilitas inti & Konfigurasi
+│   └── constants/         # Konfigurasi Supabase & API Key
+├── data/                  # Layer Data
+│   └── models/            # Model data (Lab, Chat, Profile, dll)
+├── services/              # Logika Bisnis & Integrasi API
+│   ├── api_service.dart   # Integrasi ML Prediksi CKD
+│   ├── auth_service.dart  # Manajemen Auth Supabase
+│   ├── chat_service.dart  # Manajemen Pesan Chat (Full History)
+│   ├── gemini_service.dart# Integrasi Google Gemini
+│   ├── lab_service.dart   # Manajemen Data Laboratorium
 │   └── profile_service.dart
-└── ui/                    # UI layer
-    ├── pages/            # Screen/pages
-    └── widgets/          # Reusable widgets
+└── ui/                    # Layer Antarmuka (UI)
+    ├── pages/             # Halaman (User & Doctor)
+    │   ├── doctor/        # Dashboard & Fitur Dokter
+    │   └── user/          # Fitur Pasien & Chat
+    └── widgets/           # Komponen Reusable
 ```
 
 ## 🚀 Instalasi & Setup
 
 ### Prerequisites
-- Flutter SDK ^3.11.4
-- Dart SDK
-- Android Studio / Xcode
-- Git
+- Flutter SDK (Versi terbaru)
+- Akun Supabase (Project URL & Anon Key)
+- API Key Google Gemini (dari Google AI Studio)
 
 ### Langkah Instalasi
 
@@ -76,68 +65,20 @@ lib/
    flutter pub get
    ```
 
-3. **Setup Firebase (Android)**
-   - Download `google-services.json` dari Firebase Console
-   - Letakkan di `android/app/`
-   - File sudah ada di repository (jangan commit ke Git)
+3. **Konfigurasi Environment**
+   Buka file `lib/core/constants/supabase_config.dart` dan sesuaikan kredensial Anda (URL Supabase, Anon Key, dan Gemini API Key).
 
-4. **Setup Environment Variables**
-   pada file lib\core\constants\supabase_config.dart, disana kamu ganti api gemini dan supabasenya, sesuaikan, ouh ya saya pakai local hehe.
+4. **Setup Database**
+   Pastikan tabel `profiles`, `lab_results`, `chat_sessions`, dan `messages` sudah terkonfigurasi di Supabase dengan RLS (Row Level Security) yang sesuai agar data tetap aman.
 
 5. **Run Aplikasi**
    ```bash
    flutter run
    ```
 
-## 🏗️ Build & Release
+## 📝 Catatan Keamanan
 
-### Development Build
-```bash
-flutter run
-```
+⚠️ **PENTING:** Jangan pernah melakukan commit pada file `lib/core/constants/supabase_config.dart` jika berisi kunci API asli ke repositori publik. Selalu pastikan file tersebut masuk dalam daftar `.gitignore` atau gunakan variabel lingkungan.
 
-### Release Build (Android)
-```bash
-flutter build apk --release
-# atau untuk app bundle:
-flutter build appbundle --release
-```
-
-### Release Build (iOS)
-```bash
-flutter build ios --release
-```
-
-## 📝 Environment Variables
-
-File `.env` diperlukan untuk konfigurasi (jangan commit ke Git):
-- `GEMINI_API_KEY` - API key dari Google Gemini
-- `SUPABASE_URL` - URL Supabase project
-- `SUPABASE_ANON_KEY` - Anonymous key Supabase
-
-## 🔒 Security Notes
-
-⚠️ **File Sensitif (Jangan Commit):**
-- `google-services.json` - Firebase credentials
-- `.env` - API keys & secrets
-- `local.properties` - Android local config
-- `.vscode/launch.json` - Debug configuration
-
-Lihat `.gitignore` untuk daftar lengkap file yang di-exclude.
-
-## 📚 API Integration
-
-### Supabase
-Database dan authentication backend menggunakan Supabase PostgreSQL.
-
-### Firebase
-Push notifications dan Cloud Messaging via Firebase.
-
-### Google Generative AI (Gemini)
-Chatbot untuk konsultasi nutrisi dan kesehatan ginjal.
-
-## 🧪 Testing
-
-```bash
-flutter test
-```
+---
+© 2024 NutriGinjal Team - Health Tech Innovation

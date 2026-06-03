@@ -31,7 +31,7 @@ NutriGinjal hadir untuk memecahkan masalah kompleksitas diet pada pasien ginjal.
 ## ✨ Fitur Utama (Detailed)
 
 ### 👤 Modul Pasien (User)
-*   **NutriSnap AI Chat**: Chatbot cerdas yang menggunakan model Gemini 1.5 Flash. AI ini bertindak sebagai "Health Buddy" yang ramah, memberikan saran menu, dan menjawab pertanyaan seputar pantangan makanan dengan mempertimbangkan riwayat chat sebelumnya.
+*   **NutriSnap AI Chat**: Chatbot cerdas yang menggunakan model Gemini 2.5 Flash. AI ini bertindak sebagai "Health Buddy" yang ramah, memberikan saran menu, dan menjawab pertanyaan seputar pantangan makanan dengan mempertimbangkan riwayat chat sebelumnya.
 *   **Prediction Risk Engine**: Mengizinkan pasien memasukkan 24 parameter laboratorium (dari hasil tes klinis) untuk mendapatkan prediksi risiko perkembangan CKD (Rendah/Tinggi).
 *   **Lab Vault (Riwayat Lab)**: Penyimpanan digital terstruktur untuk hasil laboratorium. Pasien dapat melihat tren kesehatan mereka dari waktu ke waktu.
 *   **Smart Dashboard**: Menampilkan status kesehatan terbaru, artikel edukasi pilihan, dan akses cepat ke layanan utama.
